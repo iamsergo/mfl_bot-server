@@ -2,10 +2,8 @@ import TgBot from 'node-telegram-bot-api';
 import dotenv from 'dotenv';
 dotenv.config();
 import { PgStorage as Storage } from '../storage';
-import { StartCommandMatch } from './command-match/start';
-import { CommandOptions, DefaultCommand, StartCommand } from './commands';
-import { CommandMessage } from './types';
-
+import { StartCommandMatch, PredictionCommandMatch } from './command-match/';
+import { CommandOptions, DefaultCommand, PredictionCommand, StartCommand } from './commands';
 
 const bot = new TgBot(process.env.BOT_TOKEN!, { polling: true });
 
@@ -34,6 +32,8 @@ bot.on('message', async (msg) => {
 
   if(new StartCommandMatch(text).existed()) {
     await new StartCommand(options).execute();
+  } else if(new PredictionCommandMatch(text).existed()) {
+    await new PredictionCommand(options).execute();
   } else {
     await new DefaultCommand(options).execute();
   }
