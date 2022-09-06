@@ -1,7 +1,5 @@
 import TgBot from 'node-telegram-bot-api';
-import dotenv from 'dotenv';
-dotenv.config();
-import { PgStorage as Storage } from '../storage';
+import storage from '../storage';
 import { StartCommandMatch, PredictionCommandMatch } from './command-match/';
 import { CommandOptions, DefaultCommand, PredictionCommand, StartCommand } from './commands';
 
@@ -17,7 +15,7 @@ bot.on('message', async (msg) => {
   const text = msg.text!.toLowerCase();
 
   const options: CommandOptions = {
-    storage: new Storage(),
+    storage,
     bot,
     message: {
       chatId: msg.chat.id,

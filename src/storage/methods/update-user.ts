@@ -1,6 +1,6 @@
 import { Pool } from 'pg';
 import { TgUser } from '../../bot/types';
-import { User } from '../types';
+import { DBUser } from '../../types';
 import { IMethod } from "./interface";
 
 type UpdateUserData = {
@@ -16,11 +16,11 @@ export class UpdateUser implements IMethod<void> {
     this.user = data.user;
   }
 
-  private async getUser(): Promise<User | undefined> {
+  private async getUser(): Promise<DBUser | undefined> {
     const sql = `SELECT * FROM users WHERE tgid=$1`;
     const values = [this.user.id];
     const { rows } = await this.db.query(sql, values);
-    return rows[0] as User;
+    return rows[0] as DBUser;
   }
 
   private async createUser(): Promise<void> {

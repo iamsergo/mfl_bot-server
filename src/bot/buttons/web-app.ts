@@ -12,7 +12,7 @@ export class WebAppButton {
   }
 
   public asObject(): SendBasicOptions {
-    const searchParams = this.pageParam ? `?page=${this.pageParam}` : '';
+    const searchParams = this.pageParam ? `?app=${this.pageParam}` : '';
     const url = `${this.webAppUrl}${searchParams}`;
 
     return {
