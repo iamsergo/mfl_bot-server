@@ -7,6 +7,7 @@ export class StartCommand extends Command {
     await this.bot.sendMessage(
       this.message.chatId,
       new MenuText().value(),
+      { parse_mode: 'HTML' }
     );
   }
 }
