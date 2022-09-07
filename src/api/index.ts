@@ -56,6 +56,16 @@ app.get('/predictions/:userId', async (req, res) => {
     extended: true,
   });
   await res.json(predictions);
-})
+});
+
+app.get('/table', async (req, res) => {
+  const table = await storage.getTable({ extended: true });
+  await res.json(table);
+});
+
+app.get('/all-games', async (req, res) => {
+  const games = await storage.getGames();
+  await res.json(games);
+});
 
 export default app;

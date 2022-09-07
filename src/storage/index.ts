@@ -12,6 +12,7 @@ import { GetUserStats} from './methods/get-user-stats';
 import { GetLastUserResults } from './methods/get-last-user-results'
 import { GetUserPredictions} from './methods/get-user-predictions';
 import { GetTable } from './methods/get-table';
+import { GetGames } from './methods/get-games';
 
 class PgStorage implements IStorage {
   private db: Pool;
@@ -62,6 +63,10 @@ class PgStorage implements IStorage {
 
   public async getTable(data: { extended?: boolean }): Promise<DBTableRow[]> {
     return new GetTable(this.db, data).execute();
+  }
+
+  public async getGames(): Promise<DBGame[]> {
+    return new GetGames(this.db).execute();
   }
 }
 

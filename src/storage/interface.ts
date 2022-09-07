@@ -12,4 +12,5 @@ export interface IStorage {
   getLastUserResults(data: { userId: number }): Promise<DBLastResults>
   getUserPredictions(data: { userId: number, limit: number, offset: number, extended?: boolean }): Promise<DBPredictionResult[]>
   getTable(data: { extended?: boolean }): Promise<DBTableRow[]>
+  getGames(): Promise<DBGame[]>
 }
