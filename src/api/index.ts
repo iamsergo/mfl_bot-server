@@ -46,4 +46,16 @@ app.get('/rating', async (req, res) => {
   await res.json(rating);
 });
 
+app.get('/predictions/:userId', async (req, res) => {
+  const { userId } = req.params;
+
+  const predictions = await storage.getUserPredictions({
+    userId: +userId,
+    limit: 100,
+    offset: 0,
+    extended: true,
+  });
+  await res.json(predictions);
+})
+
 export default app;
