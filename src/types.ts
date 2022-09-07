@@ -63,3 +63,18 @@ export type DBPredictionResult = {
   points: DBPredictionPoints | null;
   result: number[] | null;
 };
+
+export type DBTableRow = {
+  group: string;
+  position: number;
+  team: string;
+  team_logo: string;
+  games: number;
+  win: number;
+  draw: number;
+  lose: number;
+  score: number;
+  pass: number;
+  diff: number;
+  points: number;
+};

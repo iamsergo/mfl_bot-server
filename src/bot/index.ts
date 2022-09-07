@@ -1,7 +1,7 @@
 import TgBot from 'node-telegram-bot-api';
 import storage from '../storage';
-import { StartCommandMatch, PredictionCommandMatch, RatingCommandMatch, PredictionsCommandMatch, RulesCommandMatch } from './command-match/';
-import { CommandOptions, DefaultCommand, PredictionCommand, PredictionsCommand, RatingCommand, RulesCommand, StartCommand } from './commands';
+import { StartCommandMatch, PredictionCommandMatch, RatingCommandMatch, PredictionsCommandMatch, RulesCommandMatch, TournamentCommandMatch } from './command-match/';
+import { CommandOptions, DefaultCommand, PredictionCommand, PredictionsCommand, RatingCommand, RulesCommand, StartCommand, TournamentCommand } from './commands';
 
 const bot = new TgBot(process.env.BOT_TOKEN!, { polling: true });
 
@@ -36,6 +36,8 @@ bot.on('message', async (msg) => {
     await new PredictionsCommand(options).execute();
   } else if(new RulesCommandMatch(text).existed()) {
     await new RulesCommand(options).execute();
+  } else if(new TournamentCommandMatch(text).existed()) {
+    await new TournamentCommand(options).execute();
   } else {
     await new DefaultCommand(options).execute();
   }

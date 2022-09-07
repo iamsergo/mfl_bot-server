@@ -1,5 +1,5 @@
 import { TgUser } from "../bot/types";
-import { DBGame, DBLastResults, DBPrediction, DBPredictionResult, DBPreictionsStats, DBRating } from "../types";
+import { DBGame, DBLastResults, DBPrediction, DBPredictionResult, DBPreictionsStats, DBRating, DBTableRow } from "../types";
 
 export interface IStorage {
   updateUser(user: TgUser): Promise<void>
@@ -11,4 +11,5 @@ export interface IStorage {
   getUserStats(data: { userId: number }): Promise<DBPreictionsStats[]>
   getLastUserResults(data: { userId: number }): Promise<DBLastResults>
   getUserPredictions(data: { userId: number, limit: number, offset: number, extended?: boolean }): Promise<DBPredictionResult[]>
+  getTable(data: { extended?: boolean }): Promise<DBTableRow[]>
 }
