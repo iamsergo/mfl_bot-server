@@ -1,6 +1,6 @@
 import { Pool } from 'pg';
 import { TgUser } from '../bot/types';
-import { DBGame, DBPrediction, DBRating } from '../types';
+import { DBGame, DBLastResults, DBPrediction, DBPredictionResult, DBPreictionsStats, DBRating } from '../types';
 import { IStorage } from "./interface";
 import { CreatePrediction } from './methods/create-prediction';
 import { GetGame } from './methods/get-game';
@@ -8,6 +8,9 @@ import { GetGamesForUser } from './methods/get-game-for-user';
 import { UpdateUser } from './methods/update-user';
 import { GetRating } from './methods/get-rating';
 import { GetRatingForUser } from './methods/get-rating-for-user';
+import { GetUserStats} from './methods/get-user-stats';
+import { GetLastUserResults } from './methods/get-last-user-results'
+import { GetUserPredictions} from './methods/get-user-predictions';
 
 class PgStorage implements IStorage {
   private db: Pool;
@@ -44,6 +47,16 @@ class PgStorage implements IStorage {
 
   public async getRatingForUser(data: {userId: number}): Promise<DBRating> {
     return new GetRatingForUser(this.db, data).execute();
+  }
+
+  public async getUserStats(data: { userId: number }): Promise<DBPreictionsStats[]> {
+    return new GetUserStats(this.db, data).execute();
+  }
+  public async getLastUserResults(data: { userId: number }): Promise<DBLastResults> {
+    return new GetLastUserResults(this.db, data).execute();
+  }
+  public async getUserPredictions(data: { userId: number, limit: number, offset: number }): Promise<DBPredictionResult[]> {
+    return new GetUserPredictions(this.db, data).execute();
   }
 }
 

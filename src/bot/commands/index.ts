@@ -4,3 +4,4 @@ export * from './start';
 export * from './default';
 export * from './prediction';
 export * from './rating';
+export * from './predictions';
