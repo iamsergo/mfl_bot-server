@@ -1,11 +1,13 @@
 import { Pool } from 'pg';
 import { TgUser } from '../bot/types';
-import { DBGame, DBPrediction } from '../types';
+import { DBGame, DBPrediction, DBRating } from '../types';
 import { IStorage } from "./interface";
 import { CreatePrediction } from './methods/create-prediction';
 import { GetGame } from './methods/get-game';
 import { GetGamesForUser } from './methods/get-game-for-user';
 import { UpdateUser } from './methods/update-user';
+import { GetRating } from './methods/get-rating';
+import { GetRatingForUser } from './methods/get-rating-for-user';
 
 class PgStorage implements IStorage {
   private db: Pool;
@@ -34,6 +36,14 @@ class PgStorage implements IStorage {
 
   public async getGame(data: { gameId: number }): Promise<DBGame> {
     return new GetGame(this.db, data).execute();
+  }
+
+  public async getRating(data: { limit: number, offset: number }): Promise<DBRating[]> {
+    return new GetRating(this.db, data).execute();
+  }
+
+  public async getRatingForUser(data: {userId: number}): Promise<DBRating> {
+    return new GetRatingForUser(this.db, data).execute();
   }
 }
 

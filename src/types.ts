@@ -34,3 +34,9 @@ export type DBPrediction = {
   diff: number | null;
   time: string;
 };
+
+export type DBRating = {
+  username: string;
+  position: number;
+  points: number;
+};
