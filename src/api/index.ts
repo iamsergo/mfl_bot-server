@@ -37,4 +37,13 @@ app.post('/prediction', async (req, res) => {
   res.end();
 });
 
+app.get('/rating', async (req, res) => {
+  const { limit, offset } = req.query;
+
+  console.log({ limit, offset });
+  
+  const rating = await storage.getRating({ limit: +limit!, offset: +offset! });
+  await res.json(rating);
+});
+
 export default app;
