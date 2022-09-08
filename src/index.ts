@@ -1,8 +1,8 @@
 import dotenv from 'dotenv';
 dotenv.config();
-import bot from './bot';
-import app from './api';
+import storage from './storage';
+import { Bot } from './bot';
+import { ApiServer } from './api';
 
-console.log(bot);
-
-app.listen(process.env.API_PORT, () => console.log('\n\nStarted...\n\n'));
+const bot = new Bot(storage).launch();
+new ApiServer(bot, storage).launch();
