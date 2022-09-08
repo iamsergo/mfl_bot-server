@@ -9,6 +9,7 @@ export enum GameResult {
   HOME = 0,
   DRAW = 1,
   AWAY = 2,
+  TECHNICAL = 3,
 }
 
 export type DBGame = {
@@ -45,7 +46,8 @@ export enum DBPredictionPoints {
   NOTHING = 0,
   ONLY_RESULT = 2,
   RESULT_AND_DIFF = 3,
-  EXACTLY_SCORE = 5
+  EXACTLY_SCORE = 5,
+  TECHNICAL_RESULT = 1,
 }
 
 export type DBPreictionsStats = {

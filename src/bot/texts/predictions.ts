@@ -26,6 +26,7 @@ export class PredictionsText {
     [''+DBPredictionPoints.ONLY_RESULT]: '🟠',
     [''+DBPredictionPoints.RESULT_AND_DIFF]: '🟡',
     [''+DBPredictionPoints.EXACTLY_SCORE]: '🟢',
+    [''+DBPredictionPoints.TECHNICAL_RESULT]: '⚪',
   };
 
   private getUserRating(): string {
