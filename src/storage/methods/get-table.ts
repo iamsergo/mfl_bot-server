@@ -29,12 +29,13 @@ export class GetTable implements IMethod<DBTableRow[]> {
       SELECT
         tournament_table.group,
         tournament_table.position,
+        tournament_table.team_id,
         teams.name as team,
         tournament_table.points
         ${extendedSql}
       FROM tournament_table
       JOIN teams ON tournament_table.team_id = teams.id
-      ORDER BY tournament_table.position ASC
+      ORDER BY tournament_table.group, tournament_table.position ASC
     `;
     const { rows } = await this.db.query(sql);
     return rows;

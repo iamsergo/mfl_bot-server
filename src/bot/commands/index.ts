@@ -7,3 +7,5 @@ export * from './rating';
 export * from './predictions';
 export * from './rules';
 export * from './tournament';
+export * from './update-games';
+export * from './update-table';

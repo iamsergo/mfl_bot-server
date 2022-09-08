@@ -1,6 +1,6 @@
 import { Pool } from 'pg';
 import { TgUser } from '../bot/types';
-import { DBGame, DBLastResults, DBPrediction, DBPredictionResult, DBPreictionsStats, DBRating, DBTableRow } from '../types';
+import { DBGame, DBLastResults, DBPrediction, DBPredictionResult, DBPreictionsStats, DBRating, DBRawGame, DBTableRow } from '../types';
 import { IStorage } from "./interface";
 import { CreatePrediction } from './methods/create-prediction';
 import { GetGame } from './methods/get-game';
@@ -13,6 +13,9 @@ import { GetLastUserResults } from './methods/get-last-user-results'
 import { GetUserPredictions} from './methods/get-user-predictions';
 import { GetTable } from './methods/get-table';
 import { GetGames } from './methods/get-games';
+import { UpdateGames } from './methods/update-games';
+import { DataForUpdate } from '../bot/commands/update-games';
+import { UpdateTable } from './methods/update-table';
 
 class PgStorage implements IStorage {
   private db: Pool;
@@ -67,6 +70,14 @@ class PgStorage implements IStorage {
 
   public async getGames(): Promise<DBGame[]> {
     return new GetGames(this.db).execute();
+  }
+
+  public async updateGames(data: DataForUpdate[]): Promise<DBRawGame[]> {
+    return new UpdateGames(this.db, data).execute();
+  }
+
+  public async updateTable(data: DBTableRow[]): Promise<void> {
+    return new UpdateTable(this.db, data).execute();
   }
 }
 

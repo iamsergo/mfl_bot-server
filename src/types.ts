@@ -67,6 +67,7 @@ export type DBPredictionResult = {
 export type DBTableRow = {
   group: string;
   position: number;
+  team_id: number;
   team: string;
   team_logo: string;
   games: number;
@@ -77,4 +78,17 @@ export type DBTableRow = {
   pass: number;
   diff: number;
   points: number;
+};
+
+export type DBRawGame = {
+  id: string;
+  home_id: number;
+  away_id: number;
+  time: string;
+  score: number[] | null;
+  result: GameResult | null;
+  total: number | null;
+  diff: number | null;
+  group: string;
+  tour: string;
 };
