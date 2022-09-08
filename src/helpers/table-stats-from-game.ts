@@ -26,20 +26,12 @@ export class TableStatsFromGame {
     const diff = score - pass;
 
     let gameStats;
-    if(this.game.result === 0) {
-      gameStats = myIdx === 0
-        ? { win: 1, draw: 0, lose: 0, points: 3 }
-        : { win: 0, draw: 0, lose: 1, points: 0 };
-    } else if(this.game.result === 2) {
-      gameStats = myIdx === 0
-        ? { win: 0, draw: 0, lose: 1, points: 0 }
-        : { win: 1, draw: 0, lose: 0, points: 3 };
-    } else if(this.game.result === 1) {
-      gameStats = { win: 0, draw: 1, lose: 0, points: 1 };
+    if(score > pass) {
+      gameStats = { win: 1, draw: 0, lose: 0, points: 3 };
+    } else if(score < pass) {
+      gameStats = { win: 0, draw: 0, lose: 1, points: 0 };
     } else {
-      gameStats = score > pass
-        ? { win: 1, draw: 0, lose: 0, points: 3 }
-        : { win: 0, draw: 0, lose: 1, points: 0 };
+      gameStats = { win: 0, draw: 1, lose: 0, points: 1 };
     }
 
     return {

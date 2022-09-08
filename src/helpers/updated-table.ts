@@ -12,18 +12,17 @@ export class UpdatedTable {
 
   public value(): {[groupName: string]: DBTableRow[]} {
     const sortedTable = this.table.map(row => {
-      const dataForUpdateRow = this.dataForUpdate.find(d => d.teamId === row.team_id);
-      if(!dataForUpdateRow) return row;
+      const dataForUpdateRow = this.dataForUpdate.filter(d => d.teamId === row.team_id);
       return {
         ...row,
-        games: row.games + dataForUpdateRow.games,
-        win: row.win + dataForUpdateRow.win,
-        draw: row.draw + dataForUpdateRow.draw,
-        lose: row.lose + dataForUpdateRow.lose,
-        score: row.score + dataForUpdateRow.score,
-        pass: row.pass + dataForUpdateRow.pass,
-        diff: row.diff + dataForUpdateRow.diff,
-        points: row.points + dataForUpdateRow.points,
+        games: row.games + dataForUpdateRow.map(r => r.games).reduce((s, v) => s + v ,0),
+        win: row.win + dataForUpdateRow.map(r => r.win).reduce((s, v) => s + v ,0),
+        draw: row.draw + dataForUpdateRow.map(r => r.draw).reduce((s, v) => s + v ,0),
+        lose: row.lose + dataForUpdateRow.map(r => r.lose).reduce((s, v) => s + v ,0),
+        score: row.score + dataForUpdateRow.map(r => r.score).reduce((s, v) => s + v ,0),
+        pass: row.pass + dataForUpdateRow.map(r => r.pass).reduce((s, v) => s + v ,0),
+        diff: row.diff + dataForUpdateRow.map(r => r.diff).reduce((s, v) => s + v ,0),
+        points: row.points + dataForUpdateRow.map(r => r.points).reduce((s, v) => s + v ,0),
       };
     }).sort((a, b) => b.points - a.points);
 

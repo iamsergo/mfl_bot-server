@@ -49,10 +49,12 @@ export class PredictionsText {
       [''+DBPredictionPoints.RESULT_AND_DIFF]: 'Угадан результат и разница(3оч.)',
       [''+DBPredictionPoints.EXACTLY_SCORE]: 'Угадан точный счет(5оч.)',
     };
-    const statsRows = Object.entries(this.signs).map(([key, sign]) => {
-      const count = map[key] || 0;
-      return `${sign} ${texts[key]}: ${count}`;
-    });
+    const statsRows = Object.entries(this.signs)
+      .filter(([key]) => key !== ''+DBPredictionPoints.TECHNICAL_RESULT)
+      .map(([key, sign]) => {
+        const count = map[key] || 0;
+        return `${sign} ${texts[key]}: ${count}`;
+      });
 
     const text = [
       'Общая статистика прогнозов:',

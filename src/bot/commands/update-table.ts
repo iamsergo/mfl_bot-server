@@ -1,4 +1,3 @@
-import { DiffForScore, ResultForScore, TableStatsFromGame, TeamTableStat, TotalForScore, UpdatedTable } from '../../helpers';
 import { DBTableRow } from '../../types';
 import { Command } from './abstract';
 

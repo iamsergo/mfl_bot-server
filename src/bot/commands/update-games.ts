@@ -35,9 +35,9 @@ export class UpdateGamesCommand extends Command {
     const table = await this.storage.getTable({ extended: true });
     const updatedTableByGroups = new UpdatedTable(table, dataForUpdateTable).value();
     
-    let updatedTableText = '';
+    let updatedTableText = '/upd_table';
     Object.entries(updatedTableByGroups).forEach(([groupName, rows]) => {
-      updatedTableText += `\n\n\n\n${groupName}(удалить)\n\n\n`;
+      updatedTableText += `\n\n${groupName}(удалить)\n\n\n`;
       updatedTableText += rows
         .map(r => {
           return [
