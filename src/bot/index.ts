@@ -20,7 +20,7 @@ bot.on('message', async (msg) => {
       text,
       user: {
         id: msg.from.id,
-        username: msg.from.username!,
+        username: msg.from.username || `_${msg.from.first_name}`,
         name: msg.from.first_name,
       },
     },

@@ -19,7 +19,11 @@ export class RatingText {
         else if(+u.position === 3) positionPrefix = '🥉 ';
         else positionPrefix = `#${u.position} `;
 
-        return `${positionPrefix} @${u.username} ${u.points}оч.`
+        const username = u.username[0] === '_'
+          ? u.username.slice(1)
+          : `@${u.username}`;
+
+        return `${positionPrefix} ${username} ${u.points}оч.`
       }).join('\n');
     const userRatingText = this.userRating
       ? [

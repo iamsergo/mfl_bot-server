@@ -64,10 +64,12 @@ export class PredictionsText {
     const lastResultsText = this.lastUserResults
       .map(r => this.signs[''+r.points])
       .join('');
-    return [
-      'Ваши последние проверенные прогнозы:',
-      lastResultsText,
-    ].join('\n');
+    return this.lastUserResults.length === 0
+      ? ''
+      : [
+          'Ваши последние проверенные прогнозы:',
+          lastResultsText,
+        ].join('\n');
   }
 
   private getLastUserPredictions(): string {
