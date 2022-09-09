@@ -1,3 +1,4 @@
+import path from 'path';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
@@ -20,8 +21,9 @@ export class ApiServer {
     app.use(cors());
     app.use(bodyParser.json());
     
-    app.use('/web-app', express.static('/home/head/Рабочий стол/files/mfl_bot-web-app/build'));
-    app.use('/static', express.static('/home/head/Рабочий стол/files/mfl_bot-web-app/build/static'));
+    app.use('/web-app', express.static('build'));
+    app.use('/static', express.static('build/static'));
+    app.use('/images', express.static('images'));
     
     app.get('/games', async (req, res) => {
       const { userId } = req.query;
