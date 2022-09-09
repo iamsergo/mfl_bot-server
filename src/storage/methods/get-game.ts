@@ -17,9 +17,7 @@ export class GetGame implements IMethod<DBPrediction> {
   async execute() {
     const sql = `
       SELECT
-        games.id,
-        array_agg(teams.name) as teams,
-        array_agg(teams.logo) as teams_logos,
+        gs.*,
         games.time,
         games.score,
         games.result,
@@ -27,10 +25,21 @@ export class GetGame implements IMethod<DBPrediction> {
         games.diff,
         games.group,
         games.tour
-      FROM games
-      JOIN teams ON games.id = $1
-      AND teams.id IN (games.home_id, games.away_id)
-      GROUP BY games.id
+      FROM (
+        SELECT
+          games.id,
+          array_agg(ARRAY [games.home_name, teams.name]) as teams,
+          array_agg(ARRAY [games.home_logo, teams.logo]) as teams_logos
+        FROM (
+          SELECT games.*, teams.name as home_name, teams.logo as home_logo
+          FROM games
+          JOIN teams ON teams.id = games.home_id
+        ) as games
+        JOIN teams ON teams.id = games.away_id
+        GROUP BY games.id
+      ) as gs
+      JOIN games ON gs.id = games.id
+      WHERE games.id = $1
     `;
     const values = [this.gameId];
     const { rows } = await this.db.query(sql, values);

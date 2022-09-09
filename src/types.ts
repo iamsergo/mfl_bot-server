@@ -14,8 +14,8 @@ export enum GameResult {
 
 export type DBGame = {
   id: string;
-  teams: string[];
-  teams_logos: string[];
+  teams: string[][];
+  teams_logos: string[][];
   time: string;
   score: number[] | null;
   result: GameResult | null;
@@ -58,9 +58,9 @@ export type DBPreictionsStats = {
 export type DBLastResults = { points: number }[];
 
 export type DBPredictionResult = {
-  teams_logos: string[];
+  teams_logos: string[][];
   time: string;
-  teams: string[];
+  teams: string[][];
   prediction: number[];
   points: DBPredictionPoints | null;
   result: number[] | null;

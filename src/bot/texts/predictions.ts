@@ -79,7 +79,7 @@ export class PredictionsText {
     const lastPredictionsText = this.userPredictions.length === 0
       ? 'У вас пока нет прогнозов.'
       : this.userPredictions.map(p => {
-        const teamsText = p.teams.join('-');
+        const teamsText = p.teams[0].join('-');
         const scoreText = p.result ? p.result.join(':') : '?:?';
         return [
           teamsText + ' ' + scoreText,

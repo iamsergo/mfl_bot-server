@@ -27,19 +27,31 @@ export class GetUserPredictions implements IMethod<DBPredictionResult[]> {
   async execute() {
     const sql = `
       SELECT
-        ${this.extended ? 'array_agg(teams.logo) as teams_logos, games.time,' : ''}
-        array_agg(teams.name) as teams,
+        ${this.extended ? 'ps.teams_logos, games.time,' : ''}
+        ps.teams,
         predictions.value as prediction,
         predictions.points,
         games.score as result
       FROM (
-        SELECT *
-        FROM predictions
-        WHERE user_id=$1
-      ) as predictions
-      JOIN games ON games.id = predictions.game_id
-      JOIN teams ON teams.id IN (games.home_id, games.away_id)
-      GROUP BY predictions.id, games.id, predictions.value, predictions.points, predictions.time
+        SELECT
+          predictions.prediction_id,
+          array_agg(ARRAY [predictions.home_name, teams.name]) as teams,
+          array_agg(ARRAY [predictions.home_logo, teams.logo]) as teams_logos
+        FROM (
+          SELECT predictions.*, teams.name as home_name, teams.logo as home_logo
+          FROM (
+            SELECT *, predictions.id as prediction_id
+            FROM predictions
+            JOIN games ON predictions.game_id = games.id
+            WHERE predictions.user_id = $1
+          ) as predictions
+          JOIN teams ON predictions.home_id = teams.id
+        ) as predictions
+        JOIN teams ON predictions.away_id = teams.id
+        GROUP BY predictions.prediction_id
+      ) as ps
+      JOIN predictions ON predictions.id = ps.prediction_id
+      JOIN games ON predictions.game_id = games.id
       ORDER BY predictions.time DESC
       LIMIT $2 OFFSET $3
     `;
