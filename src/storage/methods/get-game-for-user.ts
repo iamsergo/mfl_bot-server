@@ -48,6 +48,7 @@ export class GetGamesForUser implements IMethod<DBGame[]> {
       games.diff,
       games.group,
       games.tour
+    ORDER BY "group", tour, time
     `;
     const values = [this.userId];
     const { rows } = await this.db.query(sql, values);

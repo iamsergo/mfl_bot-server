@@ -34,7 +34,7 @@ export class GetGames implements IMethod<DBGame[]> {
         games.diff,
         games.group,
         games.tour
-      ORDER BY "group", tour ASC
+      ORDER BY "group", tour, time ASC
     `;
     const { rows } = await this.db.query(sql);
     return rows;

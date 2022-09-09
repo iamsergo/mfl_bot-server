@@ -40,7 +40,7 @@ export class GetUserPredictions implements IMethod<DBPredictionResult[]> {
       JOIN games ON games.id = predictions.game_id
       JOIN teams ON teams.id IN (games.home_id, games.away_id)
       GROUP BY predictions.id, games.id, predictions.value, predictions.points, predictions.time
-      ORDER BY predictions.time ASC
+      ORDER BY predictions.time DESC
       LIMIT $2 OFFSET $3
     `;
     const values = [this.userId, this.limit, this.offset];
