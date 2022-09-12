@@ -24,6 +24,7 @@ export class ApiServer {
     app.use('/web-app', express.static('build'));
     app.use('/static', express.static('build/static'));
     app.use('/images', express.static('images'));
+    app.use('/', express.static('build'));
     
     app.get('/games', async (req, res) => {
       const { userId } = req.query;
