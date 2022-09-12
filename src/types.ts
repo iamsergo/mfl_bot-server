@@ -94,3 +94,12 @@ export type DBRawGame = {
   group: string;
   tour: string;
 };
+
+export type RecentGame = {
+  id: number;
+  teams: string[][];
+  time: string;
+  score: number[] | null;
+  group: string;
+  tour: string;
+};

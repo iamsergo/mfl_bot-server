@@ -36,7 +36,7 @@ export class GetGamesForUser implements IMethod<DBGame[]> {
           JOIN teams ON teams.id = games.home_id
           WHERE games.score ISNULL
           AND games.id NOT IN (SELECT game_id FROM predictions WHERE predictions.user_id = $1)
-          AND extract(epoch from now()) * 1000 < games.time
+          AND (games.time <> 0 AND extract(epoch from now()) * 1000 < games.time OR games.time = 0)
         ) as games
         JOIN teams ON teams.id = games.away_id
         GROUP BY games.id
