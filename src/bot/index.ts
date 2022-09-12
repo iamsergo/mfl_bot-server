@@ -56,7 +56,8 @@ export class Bot {
         }
       }
     });
-    
+
+    console.log('✅ Bot launched');    
     return bot;
   }
 }

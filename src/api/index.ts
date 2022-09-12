@@ -77,6 +77,6 @@ export class ApiServer {
       await res.json(games);
     });
 
-    app.listen(process.env.API_PORT);
+    app.listen(process.env.API_PORT, () => console.log('✅ API started'));
   }
 }
