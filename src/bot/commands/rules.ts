@@ -6,6 +6,7 @@ export class RulesCommand extends Command {
     await this.bot.sendMessage(
       this.message.chatId,
       new RulesText().value(),
+      { parse_mode: 'HTML' }
     );
   }
 }
