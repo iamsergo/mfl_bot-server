@@ -29,6 +29,7 @@ class PgStorage implements IStorage {
       port: Number(process.env.DB_PORT),
       database: process.env.DB_NAME,
      });
+     console.log('✅ Storage initialized');
   }
 
   public async updateUser(user: TgUser): Promise<void> {
