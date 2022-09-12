@@ -43,7 +43,7 @@ export class ApiServer {
       await this.bot.sendMessage(
         userId,
         new ApplyingPredictionText({ prediction: p, game }).value(),
-        new WebAppButton('Выбрать матч', 'prediction').asObject()
+        // new WebAppButton('Выбрать матч', 'prediction').asObject()
       ); 
       res.end();
     });
