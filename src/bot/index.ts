@@ -14,46 +14,59 @@ export class Bot {
     const bot = new TgBot(process.env.BOT_TOKEN!, { polling: true });
 
     bot.on('message', async (msg) => {
-      if(!msg.from || !msg.text) return;
-    
-      const text = msg.text!.toLowerCase();
-    
-      const options: CommandOptions = {
-        storage: this.storage,
-        bot,
-        message: {
-          chatId: msg.chat.id,
-          text,
-          user: {
-            id: msg.from.id,
-            username: msg.from.username || `_${msg.from.first_name}`,
-            name: msg.from.first_name,
+      try {
+        if(!msg.from || !msg.text) return;
+      
+        const text = msg.text!.toLowerCase();
+      
+        const options: CommandOptions = {
+          storage: this.storage,
+          bot,
+          message: {
+            chatId: msg.chat.id,
+            text,
+            user: {
+              id: msg.from.id,
+              username: msg.from.username || `_${msg.from.first_name}`,
+              name: msg.from.first_name,
+            },
           },
-        },
-      };
-    
-      if(new StartCommandMatch(text).existed()) {
-        await new StartCommand(options).execute();
-      } else if(new PredictionCommandMatch(text).existed()) {
-        await new PredictionCommand(options).execute();
-      } else if(new RatingCommandMatch(text).existed()) {
-        await new RatingCommand(options).execute();
-      } else if(new PredictionsCommandMatch(text).existed()) {
-        await new PredictionsCommand(options).execute();
-      } else if(new RulesCommandMatch(text).existed()) {
-        await new RulesCommand(options).execute();
-      } else if(new TournamentCommandMatch(text).existed()) {
-        await new TournamentCommand(options).execute();
-      } else {
-        await new DefaultCommand(options).execute();
-      }
-    
-      if(process.env.ADMIN_ID && msg.from.id === +process.env.ADMIN_ID) {
-        if(new UpdateGamesCommandMatch(text).existed()) {
-          await new UpdateGamesCommand(options).execute();
-        } else if(new UpdateTableCommandMatch(text).existed()) {
-          await new UpdateTableCommand(options).execute();
+        };
+      
+        if(new StartCommandMatch(text).existed()) {
+          await new StartCommand(options).execute();
+        } else if(new PredictionCommandMatch(text).existed()) {
+          await new PredictionCommand(options).execute();
+        } else if(new RatingCommandMatch(text).existed()) {
+          await new RatingCommand(options).execute();
+        } else if(new PredictionsCommandMatch(text).existed()) {
+          await new PredictionsCommand(options).execute();
+        } else if(new RulesCommandMatch(text).existed()) {
+          await new RulesCommand(options).execute();
+        } else if(new TournamentCommandMatch(text).existed()) {
+          await new TournamentCommand(options).execute();
+        } else {
+          await new DefaultCommand(options).execute();
         }
+      
+        if(process.env.ADMIN_ID && msg.from.id === +process.env.ADMIN_ID) {
+          if(new UpdateGamesCommandMatch(text).existed()) {
+            await new UpdateGamesCommand(options).execute();
+          } else if(new UpdateTableCommandMatch(text).existed()) {
+            await new UpdateTableCommand(options).execute();
+          }
+        }
+      } catch(err) {
+        if(!msg.from || !process.env.ADMIN_ID) return;
+        const text = [
+          `Ошибка!`,
+          `Пользователь @${msg.from.username || `+${msg.from.first_name}`}`,
+          JSON.stringify(msg),
+          '\n\n',
+          err
+        ].join('\n\n');
+          
+        await bot.sendMessage(process.env.ADMIN_ID, text);
       }
     });
 
